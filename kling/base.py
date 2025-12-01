@@ -1,6 +1,7 @@
 """Base API client with authentication and polling logic."""
 
 import time
+import jwt
 from typing import Optional, Dict, Any, Callable
 import httpx
 from kling.exceptions import KlingAPIError, KlingTimeoutError
@@ -37,11 +38,21 @@ class BaseAPIClient:
         self._client = httpx.Client(timeout=timeout)
         self._async_client = httpx.AsyncClient(timeout=timeout)
 
+    def _generate_jwt_token(self) -> str:
+        """Generate JWT token for API authentication."""
+        now = int(time.time())
+        payload = {
+            "iss": self.access_key,
+            "exp": now + 1800,  # Token expires in 30 minutes
+            "nbf": now - 5,  # Token valid from 5 seconds ago
+        }
+        return jwt.encode(payload, self.secret_key, algorithm="HS256")
+
     def _get_headers(self) -> Dict[str, str]:
         """Get request headers with authentication."""
+        token = self._generate_jwt_token()
         return {
-            "X-Api-Key": self.access_key,
-            "X-Api-Secret": self.secret_key,
+            "Authorization": f"Bearer {token}",
             "Content-Type": "application/json",
         }
 
