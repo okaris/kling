@@ -17,7 +17,10 @@ class KlingClient:
     Provides access to all Kling AI APIs through a unified interface.
 
     Example:
-        >>> client = KlingClient(api_key="your-api-key")
+        >>> client = KlingClient(
+        ...     access_key="ak-your-access-key",
+        ...     secret_key="your-secret-key"
+        ... )
         >>>
         >>> # Generate video from text
         >>> task = client.text_to_video.create(
@@ -55,7 +58,8 @@ class KlingClient:
 
     def __init__(
         self,
-        api_key: str,
+        access_key: str,
+        secret_key: str,
         base_url: str = "https://api-singapore.klingai.com",
         timeout: float = 30.0,
         max_retries: int = 3,
@@ -63,13 +67,15 @@ class KlingClient:
         """Initialize the Kling AI client.
 
         Args:
-            api_key: Your Kling AI API key
+            access_key: Your Kling AI Access Key (ak-xxx)
+            secret_key: Your Kling AI Secret Key
             base_url: Base URL for the API (default: Singapore endpoint)
             timeout: Request timeout in seconds (default: 30)
             max_retries: Maximum retry attempts (default: 3)
         """
         self._base_client = BaseAPIClient(
-            api_key=api_key,
+            access_key=access_key,
+            secret_key=secret_key,
             base_url=base_url,
             timeout=timeout,
             max_retries=max_retries,

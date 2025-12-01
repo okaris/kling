@@ -28,8 +28,11 @@ pip install kling-sdk
 ```python
 from kling import KlingClient
 
-# Initialize the client
-client = KlingClient(api_key="your-api-key")
+# Initialize the client with your Access Key and Secret Key
+client = KlingClient(
+    access_key="ak-your-access-key",
+    secret_key="your-secret-key"
+)
 
 # Generate a video from text
 task = client.text_to_video.create(
@@ -42,6 +45,34 @@ task = client.text_to_video.create(
 # Wait for completion
 result = client.text_to_video.wait_for_completion(task.task_id)
 print(f"Video URL: {result.task_result.videos[0].url}")
+```
+
+## Authentication
+
+Get your Access Key and Secret Key from the [Kling AI Console](https://klingai.com):
+
+1. Go to the Kling AI Console
+2. Navigate to API Settings
+3. Generate or copy your Access Key (starts with `ak-`)
+4. Generate or copy your Secret Key
+
+Set them as environment variables:
+
+```bash
+export KLING_ACCESS_KEY="ak-your-access-key"
+export KLING_SECRET_KEY="your-secret-key"
+```
+
+Then in Python:
+
+```python
+import os
+from kling import KlingClient
+
+client = KlingClient(
+    access_key=os.getenv("KLING_ACCESS_KEY"),
+    secret_key=os.getenv("KLING_SECRET_KEY")
+)
 ```
 
 ## Async Usage

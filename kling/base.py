@@ -12,7 +12,8 @@ class BaseAPIClient:
 
     def __init__(
         self,
-        api_key: str,
+        access_key: str,
+        secret_key: str,
         base_url: str = "https://api-singapore.klingai.com",
         timeout: float = 30.0,
         max_retries: int = 3,
@@ -20,12 +21,14 @@ class BaseAPIClient:
         """Initialize the base API client.
 
         Args:
-            api_key: Kling AI API key
+            access_key: Kling AI Access Key (ak-xxx)
+            secret_key: Kling AI Secret Key
             base_url: Base URL for the API
             timeout: Request timeout in seconds
             max_retries: Maximum number of retry attempts
         """
-        self.api_key = api_key
+        self.access_key = access_key
+        self.secret_key = secret_key
         self.base_url = base_url.rstrip("/")
         self.timeout = timeout
         self.max_retries = max_retries
@@ -37,7 +40,8 @@ class BaseAPIClient:
     def _get_headers(self) -> Dict[str, str]:
         """Get request headers with authentication."""
         return {
-            "Authorization": f"Bearer {self.api_key}",
+            "X-Api-Key": self.access_key,
+            "X-Api-Secret": self.secret_key,
             "Content-Type": "application/json",
         }
 

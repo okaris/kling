@@ -15,8 +15,11 @@ poetry install
 ```python
 from kling import KlingClient
 
-# Initialize client
-client = KlingClient(api_key="your-api-key")
+# Initialize client with Access Key and Secret Key
+client = KlingClient(
+    access_key="ak-your-access-key",
+    secret_key="your-secret-key"
+)
 
 # Generate video from text
 task = client.text_to_video.create(
@@ -170,7 +173,10 @@ asyncio.run(main())
 from kling import KlingClient, KlingAPIError, KlingTimeoutError
 
 try:
-    client = KlingClient(api_key="your-api-key")
+    client = KlingClient(
+        access_key=os.getenv("KLING_ACCESS_KEY"),
+        secret_key=os.getenv("KLING_SECRET_KEY")
+    )
     task = client.text_to_video.create(prompt="Test")
     result = client.text_to_video.wait_for_completion(task.task_id, timeout=300)
 except KlingAPIError as e:
@@ -190,7 +196,8 @@ Check out the `examples/` directory for more detailed examples:
 ## Environment Variables
 
 ```bash
-export KLING_API_KEY="your-api-key"
+export KLING_ACCESS_KEY="ak-your-access-key"
+export KLING_SECRET_KEY="your-secret-key"
 ```
 
 Then in Python:
@@ -199,7 +206,10 @@ Then in Python:
 import os
 from kling import KlingClient
 
-client = KlingClient(api_key=os.getenv("KLING_API_KEY"))
+client = KlingClient(
+    access_key=os.getenv("KLING_ACCESS_KEY"),
+    secret_key=os.getenv("KLING_SECRET_KEY")
+)
 ```
 
 ## API Endpoints by Region
@@ -230,13 +240,19 @@ result = client.text_to_video.wait_for_completion(
 
 ```python
 # Automatic cleanup with context manager
-with KlingClient(api_key="your-key") as client:
+with KlingClient(
+    access_key=os.getenv("KLING_ACCESS_KEY"),
+    secret_key=os.getenv("KLING_SECRET_KEY")
+) as client:
     task = client.text_to_video.create(prompt="Test")
     result = client.text_to_video.wait_for_completion(task.task_id)
 # Client automatically closed
 
 # Async context manager
-async with KlingClient(api_key="your-key") as client:
+async with KlingClient(
+    access_key=os.getenv("KLING_ACCESS_KEY"),
+    secret_key=os.getenv("KLING_SECRET_KEY")
+) as client:
     task = await client.text_to_video.create_async(prompt="Test")
     result = await client.text_to_video.wait_for_completion_async(task.task_id)
 ```

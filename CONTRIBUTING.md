@@ -19,9 +19,10 @@ Thank you for your interest in contributing!
    pip install -e ".[dev]"
    ```
 
-3. **Set up API key**
+3. **Set up authentication**
    ```bash
-   export KLING_API_KEY="your-api-key"
+   export KLING_ACCESS_KEY="ak-your-access-key"
+   export KLING_SECRET_KEY="your-secret-key"
    ```
 
 ## Code Style

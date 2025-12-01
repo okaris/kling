@@ -3,8 +3,9 @@
 import os
 from kling import KlingClient
 
-api_key = os.getenv("KLING_API_KEY", "your-api-key-here")
-client = KlingClient(api_key=api_key)
+access_key = os.getenv("KLING_ACCESS_KEY", "ak-your-access-key")
+secret_key = os.getenv("KLING_SECRET_KEY", "your-secret-key")
+client = KlingClient(access_key=access_key, secret_key=secret_key)
 
 
 # Example 1: Camera Control
