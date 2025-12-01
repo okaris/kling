@@ -7,6 +7,7 @@ license = "MIT"
 readme = "README.md"
 homepage = "https://github.com/yourusername/kling-sdk"
 keywords = ["kling", "ai", "video-generation", "image-to-video", "text-to-video"]
+packages = [{include = "kling"}]
 
 [tool.poetry.dependencies]
 python = "^3.8"
